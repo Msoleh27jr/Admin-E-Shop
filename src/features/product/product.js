@@ -7,7 +7,7 @@ export const getProduct = createAsyncThunk("product/getProduct", async () => {
   try {
     let { data } = await axios.get(`${API}/Product/get-products`);
     toast.success("Products Get Successfully" , {autoClose : 1000});
-    return data.data.products;
+    return data.data;
   } catch (error) {
     console.error(error);
     toast.error("Here Something Wrong !!!" , {autoClose : 2000});

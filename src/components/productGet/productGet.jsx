@@ -83,7 +83,7 @@ const ProductGet = () => {
   const rows = [];
   const dispatch = useDispatch();
   {
-    data.map((e) => {
+    data?.products?.map((e) => {
       return rows.push({
         image: e.image,
         id: e.productName,
