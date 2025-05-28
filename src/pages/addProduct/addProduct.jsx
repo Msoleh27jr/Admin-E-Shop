@@ -63,19 +63,19 @@ const AddProduct = () => {
             placeholder="Description"
           ></textarea>
           <section className="my-5 flex justify-between items-center">
-            <select className="py-2 px-3 outline-0 rounded-[5px] text-blue-600 w-[47%] border-1 border-white">
+            <select className="py-2 px-3 outline-0 rounded-[5px] w-[47%] border-1">
               {dataSub?.map((e) => {
                 return (
-                  <option key={e.id} value={`${e.id}`}>
+                  <option className="text-black" key={e.id} value={`${e.id}`}>
                     {e.subCategoryName}
                   </option>
                 );
               })}
             </select>
-            <select className="py-2 px-3 outline-0 rounded-[5px] text-blue-600 w-[47%] border-1 border-white">
+            <select className="py-2 px-3 outline-0 rounded-[5px] w-[47%] border-1">
               {dataBrand?.map((e) => {
                 return (
-                  <option key={e.id} value={`${e.id}`}>
+                  <option className="text-black" key={e.id} value={`${e.id}`}>
                     {e.brandName}
                   </option>
                 );
@@ -111,15 +111,35 @@ const AddProduct = () => {
           </section>
           <section className="my-5">
             <h2 className="text-xl font-bold">Options</h2>
-            <div>
+            <div className="flex gap-6 my-3">
               <fieldset className="border-1 p-3 rounded-[5px] w-[40%]">
-                <legend>Option 1</legend>
-                <h2 className="text-2xl">Size</h2>
+                <legend className="px-2">Option 1</legend>
+                <h2 className="text-xl">Size</h2>
               </fieldset>
+              <fieldset className="border-1 p-3 rounded-[5px] w-[17%]">
+                <legend className="px-2">Value</legend>
+                <select className="py-2 px-3 outline-0 rounded-[5px]">
+                  <option className="text-black" value="S">S</option>
+                  <option className="text-black" value="M">M</option>
+                  <option className="text-black" value="L">L</option>
+                  <option className="text-black" value="XL">XL</option>
+                  <option className="text-black" value="XXL">XXL</option>
+                </select>
+              </fieldset>
+            </div>
+            <div className="flex gap-6 my-3">
               <fieldset className="border-1 p-3 rounded-[5px] w-[40%]">
-                <legend>Value</legend>
-                <select>
-                    <option value=""></option>
+                <legend className="px-2">Option 2</legend>
+                <h2 className="text-xl">Weight</h2>
+              </fieldset>
+              <fieldset className="border-1 p-3 rounded-[5px] w-[17%]">
+                <legend className="px-2">Value</legend>
+                <select className="py-2 px-3 outline-0 rounded-[5px]">
+                  <option className="text-black" value="10">10</option>
+                  <option className="text-black" value="20">20</option>
+                  <option className="text-black" value="30">30</option>
+                  <option className="text-black" value="40">40</option>
+                  <option className="text-black" value="50">50</option>
                 </select>
               </fieldset>
             </div>
