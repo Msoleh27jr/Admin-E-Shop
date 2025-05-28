@@ -1,8 +1,23 @@
-# React + Vite
+# 🛠️ Internet Shop Admin Panel
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is the admin dashboard for managing the Internet Shop. It allows administrators to control the store content, manage products, users, and orders through a secure and user-friendly interface.
 
-Currently, two official plugins are available:
+## ✨ Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🔐 Admin authentication  
+- 📦 Add, edit, and delete products  
+- 👥 Manage users and their roles  
+- 📊 View and update order statuses  
+- 📈 Dashboard with key metrics and insights
+
+## 🔗 Live Admin Panel
+
+👉 [Click here to access the admin panel](https://your-admin-panel-link.com)  
+*Replace this link with your deployed admin URL.*
+
+## 🛠 Tech Stack
+
+- **Frontend**: React
+- **Backend**: https://store-api.softclub.tj
+
+  ## Picture of E-Shop Admin
