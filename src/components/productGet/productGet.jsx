@@ -2,13 +2,15 @@ import { DataGrid } from "@mui/x-data-grid";
 import Paper from "@mui/material/Paper";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { API, getProduct } from "../../features/product/product";
+import { API, deleteProduct, getProduct } from "../../features/product/product";
 import { Link } from "react-router-dom";
 
 const paginationModel = { page: 0, pageSize: 5 };
 
 const ProductGet = () => {
   const data = useSelector((state) => state.product.data);
+  console.log(data.products);
+
   const columns = [
     {
       field: "image",
@@ -33,12 +35,7 @@ const ProductGet = () => {
       sortable: false,
       renderCell: (id) => (
         <div className="flex items-center my-3 gap-5" title="">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log(id.value);
-            }}
-          >
+          <button>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -55,9 +52,8 @@ const ProductGet = () => {
             </svg>
           </button>
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log(id.value);
+            onClick={() => {
+              dispatch(deleteProduct(id.value));
             }}
           >
             <svg
@@ -100,7 +96,7 @@ const ProductGet = () => {
   }, [dispatch]);
   return (
     <div className="relative">
-      <Link to={'/dashboard/addProduct'}>
+      <Link to={"/dashboard/addProduct"}>
         <button className="absolute right-0 top-[-70px] py-2 bg-blue-600 px-5 rounded-[5px]">
           + Add Order
         </button>
