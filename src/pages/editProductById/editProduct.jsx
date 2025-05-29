@@ -1,15 +1,23 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getSubCategory } from "../../features/sub category/subCategory";
 import { getBrands } from "../../features/brands/brands";
-import { AddProducts, getProduct } from "../../features/product/product";
+import {
+  addImages,
+  API,
+  deleteImage,
+  editProduct,
+  getProduct,
+  getProductById,
+} from "../../features/product/product";
 import { toast } from "react-toastify";
 
-const AddProduct = () => {
+const EditProduct = () => {
   const dispatch = useDispatch();
   const dataSub = useSelector((state) => state.subCategory.data);
   const dataCol = useSelector((state) => state.product.data);
+  const dataid = useSelector((state) => state.product.dataId);
   const dataBrand = useSelector((state) => state.brand.data);
   let [brandId, setBrandId] = useState("");
   let [colorId, setColorId] = useState("");
@@ -19,53 +27,60 @@ const AddProduct = () => {
   let [subId, setSubId] = useState("");
   let [code, setCode] = useState("");
   let [size, setSize] = useState("");
+  const [idx, setIdx] = useState(null);
   const [image, setImage] = useState(null);
   const [ProductName, setProductName] = useState("");
   const [disc, setDisc] = useState("");
   const [weight, setWeight] = useState("");
   const [stock, setStock] = useState(false);
+  const [product, setProduct] = useState(null);
+  const { id } = useParams();
 
-  const funAddProduct = () => {
-    if (!image || image.length == 0) {
-      toast.error("Please select an image.", { autoClose: 1000 });
-      return;
+  const AddImage = () => {
+    const formData = new FormData();
+    formData.append("ProductId", idx);
+    for (let i = 0; i < image.length; i++) {
+      formData.append("Files", image[i]);
     }
-
-    let formData = new FormData();
-    formData.append("Size", size);
-    formData.append("BrandId", brandId);
-    formData.append("DiscountPrice", discPrice);
-    formData.append("Price", price);
-    formData.append("Quantity", quantity);
-    formData.append("Code", code);
-    formData.append("Weight", weight);
-    formData.append("Images", image[0]);
-    formData.append("SubCategoryId", subId);
-    formData.append("HasDiscount", stock);
-    formData.append("Description", disc);
-    formData.append("ColorId", colorId);
-    formData.append("ProductName", ProductName);
-    dispatch(AddProducts(formData));
-    setSize("");
-    setBrandId("");
-    setDiscPrice("");
-    setPrice("");
-    setQuantity("");
-    setCode("");
-    setWeight("");
-    setImage(null);
-    setSubId("");
-    setStock(false);
-    setDisc("");
-    setColorId("");
-    setProductName("");
+    dispatch(addImages(formData));
   };
 
+  useEffect(() => {
+    setProduct(dataid);
+    if (product) {
+      setProductName(product.productName);
+      setDisc(product.description);
+      setIdx(product.id);
+      setQuantity(product.quantity);
+      setWeight(product.weight);
+      setPrice(product.price);
+      setDiscPrice(product.discountPrice);
+      setStock(product.hasDiscount);
+      setSubId(product.subCategoryId);
+      setSize(product.size);
+      setCode(product.code);
+      console.log(product.images);
+
+      dataCol.colors?.filter((e) => {
+        if (e.colorName == product.color) {
+          setColorId(e.id);
+        }
+      });
+      dataBrand?.filter((e) => {
+        if (e.brandName == product.brand) {
+          setBrandId(e.id);
+        }
+      });
+    }
+  }, [dataid, id, colorId, dataCol, product, dataBrand]);
+  console.log(product);
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getProduct());
     dispatch(getSubCategory());
     dispatch(getBrands());
-  }, [dispatch]);
+    dispatch(getProductById(id));
+  }, [dispatch, id]);
   return (
     <div>
       <section className="flex items-center justify-between">
@@ -297,7 +312,8 @@ const AddProduct = () => {
 
               <input
                 type="file"
-                className="w-[50%] text-gray-700"
+                multiple
+                className="w-[50%] text-gray-700 cursor-pointer"
                 onChange={(e) => setImage(e.target.files)}
               />
               <h3 className="text-[19px] font-bold my-3">
@@ -305,11 +321,68 @@ const AddProduct = () => {
               </h3>
               <p>(SVG, JPG, PNG, or gif maximum 900x400)</p>
             </div>
+            <div>
+              <div className="flex gap-5 flex-wrap">
+                {product?.images?.map((e) => {
+                  return (
+                    <div key={e.id} className="relative w-[100px]">
+                      <img
+                        className=""
+                        src={`${API}/images/${e.images}`}
+                        alt=""
+                      />
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-7 absolute top-0 right-0 cursor-pointer"
+                        onClick={() => dispatch(deleteImage(e.id))}
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+                        />
+                      </svg>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+            <hr className="my-5" />
             <button
               className="py-2 px-8 bg-blue-600 rounded-[5px]"
-              onClick={funAddProduct}
+              onClick={AddImage}
             >
-              Save
+              Add Images
+            </button>
+            <hr className="my-5" />
+            <button
+              className="py-2 px-8 bg-blue-600 rounded-[5px]"
+              onClick={() => {
+                let products = {
+                  id: idx,
+                  brand: brandId,
+                  color: colorId,
+                  namePro: ProductName,
+                  disc: disc,
+                  quentity: quantity,
+                  size: size,
+                  weight: weight,
+                  code: code,
+                  price: price,
+                  stock: stock,
+                  discPrice: discPrice,
+                  sub: subId,
+                };
+                dispatch(editProduct(products));
+                toast.success("edit successfully", { autoClose: 1000 });
+                navigate("/dashboard/products");
+              }}
+            >
+              Edit
             </button>
           </section>
         </aside>
@@ -318,4 +391,4 @@ const AddProduct = () => {
   );
 };
 
-export default AddProduct;
+export default EditProduct;
