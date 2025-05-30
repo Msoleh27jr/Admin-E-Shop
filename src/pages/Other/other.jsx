@@ -155,15 +155,15 @@ const Other = () => {
               return (
                 <div
                   key={e.id}
-                  className="border-2 rounded-[5px] flex flex-col items-center gap-3 md:w-[20%] w-[100%]"
+                  className="border-2 rounded-[5px] flex flex-col items-center gap-3 md:w-[20%] w-[100%] relative h-[200px]"
                 >
                   <img
-                    className="w-[100%] rounded-t-[5px] h-[80%]"
+                    className="w-[100%] rounded-t-[5px] h-[100%]"
                     src={`${API}/images/${e.categoryImage}`}
                     alt=""
                   />
-                  <div className="flex gap-4 items-center">
-                    <h3>{e.categoryName}</h3>
+                  <div className="absolute flex gap-2 bg-[#020202d0] bottom-2 py-1 px-2 rounded-[5px]">
+                    <h3 className="">{e.categoryName}</h3>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"

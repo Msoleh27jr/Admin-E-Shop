@@ -8,6 +8,7 @@ import {
   API,
   deleteImage,
   editProduct,
+  getColor,
   getProduct,
   getProductById,
 } from "../../features/product/product";
@@ -16,7 +17,9 @@ import { toast } from "react-toastify";
 const EditProduct = () => {
   const dispatch = useDispatch();
   const dataSub = useSelector((state) => state.subCategory.data);
-  const dataCol = useSelector((state) => state.product.data);
+  const dataCol = useSelector((state) => state.product.dataCol);
+  console.log(dataCol);
+
   const dataid = useSelector((state) => state.product.dataId);
   const dataBrand = useSelector((state) => state.brand.data);
   let [brandId, setBrandId] = useState("");
@@ -42,10 +45,13 @@ const EditProduct = () => {
     for (let i = 0; i < image.length; i++) {
       formData.append("Files", image[i]);
     }
-    dispatch(addImages(formData));
+    dispatch(addImages(formData)).then(() => {
+      dispatch(getProductById(id));
+    });
   };
 
   useEffect(() => {
+    dispatch(getColor());
     setProduct(dataid);
     if (product) {
       setProductName(product.productName);
@@ -72,7 +78,7 @@ const EditProduct = () => {
         }
       });
     }
-  }, [dataid, id, colorId, dataCol, product, dataBrand]);
+  }, [dataid, id, colorId, dataCol, product, dataBrand, dispatch]);
   console.log(product);
   const navigate = useNavigate();
   useEffect(() => {
@@ -84,7 +90,7 @@ const EditProduct = () => {
   return (
     <div>
       <section className="flex items-center justify-between">
-        <h2 className="text-3xl flex gap-4 items-center font-bold">
+        <h2 className="md:text-3xl flex gap-4 items-center font-bold">
           {
             <Link to={"/dashboard/products"}>
               <svg
@@ -103,7 +109,7 @@ const EditProduct = () => {
               </svg>
             </Link>
           }{" "}
-          Products / Add new
+          Products / Edit Product
         </h2>
         <Link to={"/dashboard/products"}>
           <button className="border-1 py-2 px-7 rounded-[5px] border-blue-600 text-blue-600 cursor-pointer">
@@ -111,19 +117,19 @@ const EditProduct = () => {
           </button>
         </Link>
       </section>
-      <section className="my-10 flex justify-between">
-        <aside className="w-[60%]">
+      <section className="my-10 flex md:flex-row flex-col justify-between">
+        <aside className="md:w-[60%]">
           <h2 className="text-xl font-bold">Information</h2>
-          <div className="flex my-3 justify-between">
+          <div className="flex my-3 justify-between md:gap-0 gap-5">
             <input
               value={ProductName}
               onChange={(e) => setProductName(e.target.value)}
-              className="w-[65%] border-1 py-2 px-3 rounded-[5px] outline-0"
+              className="w-[70%] border-1 py-2 px-3 rounded-[5px] outline-0"
               type="text"
               placeholder="Product name"
             />
             <input
-              className="border-1 py-2 px-3 rounded-[5px] outline-0"
+              className="border-1 py-2 px-3 rounded-[5px] outline-0 w-[30%]"
               type="number"
               placeholder="Code"
               value={code}
@@ -171,21 +177,21 @@ const EditProduct = () => {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 type="number"
-                className="py-2 px-2 border-1 rounded-[5px] outline-0"
+                className="py-2 px-2 border-1 rounded-[5px] outline-0 w-[32%]"
                 placeholder="Product price"
               />
               <input
                 value={discPrice}
                 onChange={(e) => setDiscPrice(e.target.value)}
                 type="number"
-                className="py-2 px-2 border-1 rounded-[5px] outline-0"
+                className="py-2 px-2 border-1 rounded-[5px] outline-0 w-[32%]"
                 placeholder="Discount price"
               />
               <input
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
                 type="number"
-                className="py-2 px-2 border-1 rounded-[5px] outline-0"
+                className="py-2 px-2 border-1 rounded-[5px] outline-0 w-[32%]"
                 placeholder="Count"
               />
             </div>
@@ -269,11 +275,11 @@ const EditProduct = () => {
             </div>
           </section>
         </aside>
-        <aside className="w-[33%]">
+        <aside className="md:w-[33%]">
           <section className="border-1 p-3 rounded-[5px]">
             <h3 className="text-xl font-bold">Colour:</h3>
             <div className="flex gap-4 flex-wrap">
-              {dataCol.colors?.map((e) => {
+              {dataCol?.map((e) => {
                 return (
                   <button
                     key={e.id}
@@ -338,7 +344,11 @@ const EditProduct = () => {
                         strokeWidth={1.5}
                         stroke="currentColor"
                         className="size-7 absolute top-0 right-0 cursor-pointer"
-                        onClick={() => dispatch(deleteImage(e.id))}
+                        onClick={() => {
+                          dispatch(deleteImage(e.id)).then(() => {
+                            dispatch(getProductById(id));
+                          });
+                        }}
                       >
                         <path
                           strokeLinecap="round"
@@ -354,7 +364,9 @@ const EditProduct = () => {
             <hr className="my-5" />
             <button
               className="py-2 px-8 bg-blue-600 rounded-[5px]"
-              onClick={AddImage}
+              onClick={() => {
+                AddImage();
+              }}
             >
               Add Images
             </button>

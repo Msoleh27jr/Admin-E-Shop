@@ -19,6 +19,15 @@ export const getProductById = createAsyncThunk(
   }
 );
 
+export const getColor = createAsyncThunk("product/getColor", async () => {
+  try {
+    let { data } = await axios.get(`${API}/Color/get-colors`);
+    return data.data;
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 export const getProduct = createAsyncThunk("product/getProduct", async () => {
   try {
     let { data } = await axios.get(`${API}/Product/get-products`);
@@ -76,6 +85,7 @@ export const deleteImage = createAsyncThunk(
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      toast("Deleted Successfully", { autoClose: 2000 });
     } catch (error) {
       console.error(error);
     }
@@ -84,13 +94,13 @@ export const deleteImage = createAsyncThunk(
 
 export const addImages = createAsyncThunk(
   "product/addImages",
-  async (files, { dispatch }) => {
+  async (files) => {
     let token = localStorage.getItem("Admin");
     try {
       await axios.post(`${API}/Product/add-image-to-product`, files, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      dispatch(getProductById());
+      toast("Add Image Successfully", { autoClose: 2000 });
     } catch (error) {
       console.error(error);
     }
@@ -109,6 +119,7 @@ export const editProduct = createAsyncThunk(
           headers: { Authorization: `Bearer ${token}` },
         }
       );
+      toast("Edit Product Successfully", { autoClose: 2000 });
       dispatch(getProduct());
     } catch (error) {
       console.error(error);
@@ -121,6 +132,7 @@ export const Products = createSlice({
   initialState: {
     data: [],
     dataId: [],
+    dataCol: [],
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -129,6 +141,9 @@ export const Products = createSlice({
     });
     builder.addCase(getProductById.fulfilled, (state, action) => {
       state.dataId = action.payload;
+    });
+    builder.addCase(getColor.fulfilled, (state, action) => {
+      state.dataCol = action.payload;
     });
   },
 });

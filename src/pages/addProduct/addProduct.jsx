@@ -3,13 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { getSubCategory } from "../../features/sub category/subCategory";
 import { getBrands } from "../../features/brands/brands";
-import { AddProducts, getProduct } from "../../features/product/product";
+import {
+  AddProducts,
+  getColor,
+  getProduct,
+} from "../../features/product/product";
 import { toast } from "react-toastify";
 
 const AddProduct = () => {
   const dispatch = useDispatch();
   const dataSub = useSelector((state) => state.subCategory.data);
-  const dataCol = useSelector((state) => state.product.data);
+  const dataCol = useSelector((state) => state.product.dataCol);
   const dataBrand = useSelector((state) => state.brand.data);
   let [brandId, setBrandId] = useState("");
   let [colorId, setColorId] = useState("");
@@ -65,11 +69,12 @@ const AddProduct = () => {
     dispatch(getProduct());
     dispatch(getSubCategory());
     dispatch(getBrands());
+    dispatch(getColor());
   }, [dispatch]);
   return (
     <div>
       <section className="flex items-center justify-between">
-        <h2 className="text-3xl flex gap-4 items-center font-bold">
+        <h2 className="md:text-3xl flex gap-4 items-center font-bold">
           {
             <Link to={"/dashboard/products"}>
               <svg
@@ -96,19 +101,19 @@ const AddProduct = () => {
           </button>
         </Link>
       </section>
-      <section className="my-10 flex justify-between">
-        <aside className="w-[60%]">
+      <section className="my-10 flex md:flex-row flex-col justify-between">
+        <aside className="md:w-[60%]">
           <h2 className="text-xl font-bold">Information</h2>
-          <div className="flex my-3 justify-between">
+          <div className="flex md:gap-0 gap-3 my-3 justify-between">
             <input
               value={ProductName}
               onChange={(e) => setProductName(e.target.value)}
-              className="w-[65%] border-1 py-2 px-3 rounded-[5px] outline-0"
+              className="md:w-[65%] w-[60%] border-1 py-2 px-3 rounded-[5px] outline-0"
               type="text"
               placeholder="Product name"
             />
             <input
-              className="border-1 py-2 px-3 rounded-[5px] outline-0"
+              className="border-1 py-2 px-3 rounded-[5px] outline-0 w-[40%]"
               type="number"
               placeholder="Code"
               value={code}
@@ -156,21 +161,21 @@ const AddProduct = () => {
                 value={price}
                 onChange={(e) => setPrice(e.target.value)}
                 type="number"
-                className="py-2 px-2 border-1 rounded-[5px] outline-0"
+                className="py-2 px-2 border-1 rounded-[5px] outline-0 w-[32%]"
                 placeholder="Product price"
               />
               <input
                 value={discPrice}
                 onChange={(e) => setDiscPrice(e.target.value)}
                 type="number"
-                className="py-2 px-2 border-1 rounded-[5px] outline-0"
+                className="py-2 px-2 border-1 rounded-[5px] outline-0 w-[32%]"
                 placeholder="Discount price"
               />
               <input
                 value={quantity}
                 onChange={(e) => setQuantity(e.target.value)}
                 type="number"
-                className="py-2 px-2 border-1 rounded-[5px] outline-0"
+                className="py-2 px-2 border-1 rounded-[5px] outline-0 w-[32%]"
                 placeholder="Count"
               />
             </div>
@@ -254,11 +259,11 @@ const AddProduct = () => {
             </div>
           </section>
         </aside>
-        <aside className="w-[33%]">
+        <aside className="md:w-[33%]">
           <section className="border-1 p-3 rounded-[5px]">
             <h3 className="text-xl font-bold">Colour:</h3>
             <div className="flex gap-4 flex-wrap">
-              {dataCol.colors?.map((e) => {
+              {dataCol?.map((e) => {
                 return (
                   <button
                     key={e.id}
