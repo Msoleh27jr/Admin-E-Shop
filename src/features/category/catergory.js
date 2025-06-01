@@ -50,6 +50,23 @@ export const addCategory = createAsyncThunk(
   }
 );
 
+export const editCategory = createAsyncThunk(
+  "category/editCategory",
+  async (elem , {dispatch}) => {
+    let token = localStorage.getItem("Admin");
+    try {
+      await axios.put(`${API}/Category/update-category`, elem, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      toast.success("Edit Category Successfully", { autoClose: 1000 });
+      dispatch(getCategory())
+    } catch (error) {
+      console.error(error);
+      toast.error("Here Something Incorrect", { autoClose: 1000 });
+    }
+  }
+);
+
 export const Category = createSlice({
   name: "category",
   initialState: {

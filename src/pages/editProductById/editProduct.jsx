@@ -51,7 +51,6 @@ const EditProduct = () => {
   };
 
   useEffect(() => {
-    dispatch(getColor());
     setProduct(dataid);
     if (product) {
       setProductName(product.productName);
@@ -79,9 +78,12 @@ const EditProduct = () => {
       });
     }
   }, [dataid, id, colorId, dataCol, product, dataBrand, dispatch]);
+  console.log(discPrice);
+  
   console.log(product);
   const navigate = useNavigate();
   useEffect(() => {
+    dispatch(getColor());
     dispatch(getProduct());
     dispatch(getSubCategory());
     dispatch(getBrands());
@@ -129,7 +131,7 @@ const EditProduct = () => {
               placeholder="Product name"
             />
             <input
-              className="border-1 py-2 px-3 rounded-[5px] outline-0 w-[30%]"
+              className="border-1 py-2 px-3 rounded-[5px] outline-0 w-[25%]"
               type="number"
               placeholder="Code"
               value={code}
@@ -203,7 +205,7 @@ const EditProduct = () => {
               <input
                 checked={stock}
                 onChange={() => {
-                  setStock(true);
+                  setStock(!stock);
                   console.log(stock);
                 }}
                 type="checkbox"
@@ -344,11 +346,7 @@ const EditProduct = () => {
                         strokeWidth={1.5}
                         stroke="currentColor"
                         className="size-7 absolute top-0 right-0 cursor-pointer"
-                        onClick={() => {
-                          dispatch(deleteImage(e.id)).then(() => {
-                            dispatch(getProductById(id));
-                          });
-                        }}
+                        onClick={() =>{ dispatch(deleteImage(e.id)).then(()=> dispatch(getProductById(id)))}}
                       >
                         <path
                           strokeLinecap="round"
@@ -364,9 +362,7 @@ const EditProduct = () => {
             <hr className="my-5" />
             <button
               className="py-2 px-8 bg-blue-600 rounded-[5px]"
-              onClick={() => {
-                AddImage();
-              }}
+              onClick={AddImage}
             >
               Add Images
             </button>

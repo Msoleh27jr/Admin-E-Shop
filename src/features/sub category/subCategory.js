@@ -33,6 +33,27 @@ export const deleteSubCategory = createAsyncThunk(
   }
 );
 
+export const editSubCategory = createAsyncThunk(
+  "subCategory/editSubCategory",
+  async (elem, { dispatch }) => {
+    let token = localStorage.getItem("Admin");
+    try {
+      await axios.put(
+        `${API}/SubCategory/update-sub-category?Id=${elem.id}&CategoryId=${elem.CatId}&SubCategoryName=${elem.name}`,
+        {},
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      toast.success("Edit Sub Category Successfully", { autoClose: 1000 });
+      dispatch(getSubCategory());
+    } catch (error) {
+      console.error(error);
+      toast.error("Here Something Incorrect", { autoClose: 1000 });
+    }
+  }
+);
+
 export const addSubCategory = createAsyncThunk(
   "subCategory/addSubCategory",
   async (category, { dispatch }) => {

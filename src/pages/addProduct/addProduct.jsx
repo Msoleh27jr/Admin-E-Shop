@@ -108,12 +108,12 @@ const AddProduct = () => {
             <input
               value={ProductName}
               onChange={(e) => setProductName(e.target.value)}
-              className="md:w-[65%] w-[60%] border-1 py-2 px-3 rounded-[5px] outline-0"
+              className="w-[70%] border-1 py-2 px-3 rounded-[5px] outline-0"
               type="text"
               placeholder="Product name"
             />
             <input
-              className="border-1 py-2 px-3 rounded-[5px] outline-0 w-[40%]"
+              className="border-1 py-2 px-3 rounded-[5px] outline-0 w-[25%]"
               type="number"
               placeholder="Code"
               value={code}
@@ -187,7 +187,7 @@ const AddProduct = () => {
               <input
                 checked={stock}
                 onChange={() => {
-                  setStock(true);
+                  setStock(!stock);
                   console.log(stock);
                 }}
                 type="checkbox"

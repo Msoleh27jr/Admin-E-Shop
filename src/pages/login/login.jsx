@@ -33,13 +33,13 @@ const Login = () => {
     token != null ? navigate("/dashboard") : navigate("/") 
   } , [navigate , token])
   return (
-    <div className="max-w-[1920px] m-auto flex items-center">
-      <section className="w-[50%] p-10 bg-black h-[945px] flex flex-col items-start justify-center">
+    <div className="md:max-w-[1920px] m-auto md:flex-row flex-col flex items-center h-[100vh] md:gap-0 gap-5">
+      <section className="md:w-[50%] w-[100%] md:h-[100%] p-10 bg-black flex md:flex-col flex-col-reverse items-start justify-center">
         <h2 className="text-white text-2xl">Welcome to admin panel</h2>
-        <img src={Logo} alt="" />
+        <img className="w-[150px] md:w-[60%]" src={Logo} alt="" />
       </section>
-      <section className="flex items-center justify-center w-[50%]">
-        <div className="w-[70%] flex flex-col gap-5">
+      <section className="flex items-center justify-center md:w-[50%]">
+        <div className="md:w-[70%] flex flex-col gap-5">
           <h2 className="text-3xl font-bold">Login</h2>
           <input
             value={name}

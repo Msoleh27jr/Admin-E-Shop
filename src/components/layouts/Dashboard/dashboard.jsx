@@ -6,6 +6,7 @@ import BarChartIcon from "@mui/icons-material/BarChart";
 import LayersIcon from "@mui/icons-material/Layers";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
+import logo from "../../../pages/login/img/Group 1116606595 (1).png";
 
 const NAVIGATION = [
   { kind: "header", title: "Main items" },
@@ -29,7 +30,6 @@ const demoTheme = extendTheme({
   },
 });
 
-
 function useDemoRouter() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -44,15 +44,19 @@ function useDemoRouter() {
 const Dashbord = () => {
   const navigate = useNavigate();
   const router = useDemoRouter("/dashboard");
-  
+
   const demoWindow = typeof window !== "undefined" ? window : undefined;
-  useEffect(() => { 
+  useEffect(() => {
     const token = localStorage.getItem("Admin");
     if (!token) navigate("/");
     console.log(token);
   }, [navigate]);
   return (
     <AppProvider
+      branding={{
+        logo: <img src={logo} />,
+        title: "",
+      }}
       navigation={NAVIGATION}
       router={router}
       theme={demoTheme}

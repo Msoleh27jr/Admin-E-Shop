@@ -52,6 +52,23 @@ export const deleteBrnad = createAsyncThunk(
   }
 );
 
+export const editBrand = createAsyncThunk(
+  "brand/editBrand",
+  async (elem , {dispatch}) => {
+    let token = localStorage.getItem("Admin");
+    try {
+      await axios.put(`${API}/Brand/update-brand?Id=${elem.id}&BrandName=${elem.name}`, {}, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      toast.success("Edit Brand Successfully", { autoClose: 1000 });
+      dispatch(getBrands())
+    } catch (error) {
+      console.error(error);
+      toast.error("Here Something Incorrect", { autoClose: 1000 });
+    }
+  }
+);
+
 export const Brand = createSlice({
   name: "brand",
   initialState: {
