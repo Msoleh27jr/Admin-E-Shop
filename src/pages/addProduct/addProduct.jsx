@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getSubCategory } from "../../features/sub category/subCategory";
 import { getBrands } from "../../features/brands/brands";
 import {
@@ -28,6 +28,8 @@ const AddProduct = () => {
   const [disc, setDisc] = useState("");
   const [weight, setWeight] = useState("");
   const [stock, setStock] = useState(false);
+
+  const navigate = useNavigate()
 
   const funAddProduct = () => {
     if (!image || image.length == 0) {
@@ -63,6 +65,7 @@ const AddProduct = () => {
     setDisc("");
     setColorId("");
     setProductName("");
+    navigate('/dashboard/products')
   };
 
   useEffect(() => {
