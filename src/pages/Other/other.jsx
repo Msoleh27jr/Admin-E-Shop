@@ -242,8 +242,8 @@ const Other = () => {
                       stroke="currentColor"
                       className="size-6 text-blue-600 cursor-pointer"
                       onClick={() => {
-                        handleOpenEdit();
                         setIdxCat(e.id);
+                        handleOpenEdit();
                       }}
                     >
                       <path
@@ -280,49 +280,6 @@ const Other = () => {
                 <h2 className="font-bold">Brands</h2>
                 <h2>Action</h2>
               </div>
-              <div>
-                <Modal
-                  open={openEditBrand}
-                  onClose={handleCloseEditBrand}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                  <Box sx={style}>
-                    <Typography
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
-                    >
-                      Edit Category
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                      <input
-                        type="text"
-                        placeholder="Edit Name Category"
-                        className="border-1 py-1 px-3 rounded-[5px]"
-                        value={editNameCategory}
-                        onChange={(e) => setEditNameCategory(e.target.value)}
-                      />
-                      <br />
-                      <button
-                        className="py-2 px-8 rounded-[5px] my-5 bg-blue-600"
-                        onClick={() => {
-                          let elem = {
-                            id: idxCat,
-                            name: editNameCategory,
-                          };
-                          dispatch(editBrand(elem));
-                          setEditNameCategory("");
-                          setIdxCat(null);
-                          handleCloseEditBrand();
-                        }}
-                      >
-                        Edit
-                      </button>
-                    </Typography>
-                  </Box>
-                </Modal>
-              </div>
               {dataBrand?.map((e) => {
                 return (
                   <div key={e.id} className="flex justify-between my-4 text-xl">
@@ -335,15 +292,15 @@ const Other = () => {
                         strokeWidth={1.5}
                         stroke="currentColor"
                         className="size-6 text-blue-600 cursor-pointer"
+                        onClick={() => {
+                          handleOpenEditBrand();
+                          setIdxCat(e.id);
+                        }}
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                          onClick={() => {
-                            handleOpenEditBrand();
-                            setIdxCat(e.id);
-                          }}
                         />
                       </svg>
                       <svg
@@ -385,6 +342,43 @@ const Other = () => {
                 Create
               </button>
             </div>
+            <Modal
+              open={openEditBrand}
+              onClose={handleCloseEditBrand}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box sx={style}>
+                <Typography id="modal-modal-title" variant="h6" component="h2">
+                  Edit Brand
+                </Typography>
+                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                  <input
+                    type="text"
+                    placeholder="Edit Name Category"
+                    className="border-1 py-1 px-3 rounded-[5px]"
+                    value={editNameCategory}
+                    onChange={(e) => setEditNameCategory(e.target.value)}
+                  />
+                  <br />
+                  <button
+                    className="py-2 px-8 rounded-[5px] my-5 bg-blue-600"
+                    onClick={() => {
+                      let elem = {
+                        id: idxCat,
+                        name: editNameCategory,
+                      };
+                      dispatch(editBrand(elem));
+                      setEditNameCategory("");
+                      setIdxCat(null);
+                      handleCloseEditBrand();
+                    }}
+                  >
+                    Edit
+                  </button>
+                </Typography>
+              </Box>
+            </Modal>
           </section>
         </CustomTabPanel>
         <CustomTabPanel value={value} index={2}>
@@ -394,61 +388,66 @@ const Other = () => {
                 <h2 className="font-bold">Sub Category</h2>
                 <h2>Action</h2>
               </div>
-              <div>
-                <Modal
-                  open={openEditSub}
-                  onClose={handleCloseEditSub}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                  <Box sx={style}>
-                    <Typography
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
+              <Modal
+                open={openEditSub}
+                onClose={handleCloseEditSub}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+              >
+                <Box sx={style}>
+                  <Typography
+                    id="modal-modal-title"
+                    variant="h6"
+                    component="h2"
+                  >
+                    Edit Sub Category
+                  </Typography>
+                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                    <input
+                      type="text"
+                      placeholder="Edit Name Category"
+                      className="border-1 py-1 px-3 rounded-[5px]"
+                      value={editNameCategory}
+                      onChange={(e) => setEditNameCategory(e.target.value)}
+                    />
+                    <select
+                      value={catId}
+                      onChange={(e) => setCatId(e.target.value)}
+                      className="py-2 my-3 border-1 rounded-[5px] px-5"
                     >
-                      Edit Sub Category
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                      <input
-                        type="text"
-                        placeholder="Edit Name Category"
-                        className="border-1 py-1 px-3 rounded-[5px]"
-                        value={editNameCategory}
-                        onChange={(e) => setEditNameCategory(e.target.value)}
-                      />
-                      <select value={catId} onChange={(e)=> setCatId(e.target.value)} className="py-2 my-3 border-1 rounded-[5px] px-5">
-                        {dataCategory?.map((e) => {
-                          return (
-                            <option
-                              className="text-black"
-                              key={e.id}
-                              value={e.id}
-                            >
-                              {e.categoryName}
-                            </option>
-                          );
-                        })}
-                      </select>
-                      <br />
-                      <button onClick={()=> {
+                      {dataCategory?.map((e) => {
+                        return (
+                          <option
+                            className="text-black"
+                            key={e.id}
+                            value={e.id}
+                          >
+                            {e.categoryName}
+                          </option>
+                        );
+                      })}
+                    </select>
+                    <br />
+                    <button
+                      onClick={() => {
                         let elem = {
-                          id : idxCat ,
-                          name : editNameCategory , 
-                          CatId : catId
-                        }
-                        dispatch(editSubCategory(elem))
-                        handleCloseEditSub()
-                        setCatId(null)
-                        setEditNameCategory('')
-                        setIdxCat(null)
-                      }} className="py-2 px-8 rounded-[5px] my-5 bg-blue-600">
-                        Edit
-                      </button>
-                    </Typography>
-                  </Box>
-                </Modal>
-              </div>
+                          id: idxCat,
+                          name: editNameCategory,
+                          CatId: catId,
+                        };
+                        dispatch(editSubCategory(elem));
+                        handleCloseEditSub();
+                        setCatId(null);
+                        setEditNameCategory("");
+                        setIdxCat(null);
+                      }}
+                      className="py-2 px-8 rounded-[5px] my-5 bg-blue-600"
+                    >
+                      Edit
+                    </button>
+                  </Typography>
+                </Box>
+              </Modal>
               {dataSubCat?.map((e) => {
                 return (
                   <div key={e.id} className="flex justify-between my-3">
@@ -461,15 +460,15 @@ const Other = () => {
                         strokeWidth={1.5}
                         stroke="currentColor"
                         className="size-6 text-blue-600 cursor-pointer"
+                        onClick={() => {
+                          setIdxCat(e.id);
+                          handleOpenEditSub();
+                        }}
                       >
                         <path
                           strokeLinecap="round"
                           strokeLinejoin="round"
                           d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
-                          onClick={() => {
-                            handleOpenEditSub();
-                            setIdxCat(e.id);
-                          }}
                         />
                       </svg>
                       <svg
@@ -493,7 +492,7 @@ const Other = () => {
               })}
             </div>
             <div className="md:w-[40%] w-[100%] border-1 rounded-[5px] p-5 flex flex-col items-start">
-              <h2 className="text-xl font-bold">Add new brand</h2>
+              <h2 className="text-xl font-bold">Add Sub Categoty</h2>
               <input
                 value={nameSub}
                 onChange={(e) => setNameSub(e.target.value)}
@@ -517,7 +516,8 @@ const Other = () => {
               <button
                 className="bg-blue-600 py-2 px-8 rounded-[5px] my-3"
                 onClick={() => {
-                  dispatch(addSubCategory({ name: nameSub, id: ++statusSub }));
+                  dispatch(addSubCategory({ name: nameSub, id: statusSub }));
+                  setNameSub('')
                 }}
               >
                 Create

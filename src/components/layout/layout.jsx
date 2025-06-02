@@ -1,11 +1,10 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Login from "./pages/login/login";
+import Login from "../../pages/login/login";
 import { ToastContainer } from "react-toastify";
-import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
-import { AddProduct, Dashboard , Dashbord, EditProduct, Orders, Other, Products} from "./components/lazy/lazy";
+import { AddProduct, Dashboard , Dashbord, EditProduct, Orders, Other, Products} from "../../components/lazy/lazy";
 
-function App() {
+function Layout() {
   const router = createBrowserRouter([
     {
       path: "/",
@@ -58,4 +57,4 @@ function App() {
   );
 }
 
-export default App;
+export default Layout;
