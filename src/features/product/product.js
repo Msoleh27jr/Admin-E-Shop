@@ -41,13 +41,14 @@ export const getProduct = createAsyncThunk("product/getProduct", async () => {
 
 export const deleteProduct = createAsyncThunk(
   "product/deleteProduct",
-  async (id) => {
+  async (id, { dispatch }) => {
     let token = localStorage.getItem("Admin");
     try {
       await axios.delete(`${API}/Product/delete-product?id=${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Sub Category removed Successfully", { autoClose: 1000 });
+      dispatch(getProduct());
     } catch (error) {
       toast.error("Here Something Incorrect", { autoClose: 1000 });
       console.error(error);
@@ -59,13 +60,11 @@ export const AddProducts = createAsyncThunk(
   "product/AddProduct",
   async (elem, { dispatch }) => {
     let token = localStorage.getItem("Admin");
-    // const navigate = useNavigate()
     try {
       await axios.post(`${API}/Product/add-product`, elem, {
         headers: { Authorization: `Bearer ${token}` },
       });
       toast("Added Successfully", { autoClose: 2000 });
-      // navigate("/dashboard/products")
       dispatch(getProduct());
     } catch (error) {
       toast.error("Here Something Wrong !!!", { autoClose: 2000 });
