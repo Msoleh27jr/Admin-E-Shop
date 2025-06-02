@@ -23,6 +23,6 @@ This is the admin dashboard for managing the Internet Shop. It allows administra
   ## Picture of E-Shop Admin
   ### Login Page
   ![Login Admin](https://github.com/user-attachments/assets/bd81267d-cbc6-4dd1-9165-a163d7db2d2f)
-  ### Product Page
+  ### dashboard Page
   ![Home Product](https://github.com/user-attachments/assets/47af3934-2af7-4a67-a1fe-c9ef7fd21f69)
 
