@@ -12,7 +12,7 @@ This is the admin dashboard for managing the Internet Shop. It allows administra
 
 ## 🔗 Live Admin Panel
 
-👉 [Click here to access the admin panel](https://your-admin-panel-link.com)  
+👉 [Click here to access the admin panel](https://admin-e-shop.vercel.app/)  
 *Replace this link with your deployed admin URL.*
 
 ## 🛠 Tech Stack
@@ -21,3 +21,6 @@ This is the admin dashboard for managing the Internet Shop. It allows administra
 - **Backend**: https://store-api.softclub.tj
 
   ## Picture of E-Shop Admin
+  ![Login Admin](https://github.com/user-attachments/assets/bd81267d-cbc6-4dd1-9165-a163d7db2d2f)
+  ![Home Product](https://github.com/user-attachments/assets/47af3934-2af7-4a67-a1fe-c9ef7fd21f69)
+
